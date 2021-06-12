@@ -3,13 +3,13 @@ from collections import Counter
 import time
 
 projectpath = os.getcwd() + "/"
-reuterspath = projectpath + "data/"
+datapath = projectpath + "data/"
 
 def getWords():
-    files = os.listdir(reuterspath)
+    files = os.listdir(datapath)
     words = Counter()
     for file in files:
-        lines = open(reuterspath + file, "r").readlines()
+        lines = open(datapath + file, "r").readlines()
         for line in lines:
             wordList = line.split()
             newWords = Counter(wordList)

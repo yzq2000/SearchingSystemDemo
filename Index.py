@@ -1,20 +1,16 @@
 import os
 import tools
+import LanguageAnalysis
 
-# Vibrant说以下的注释是copy的
 # 创建倒排索引
-# 在向量空间模型当中，每一个位置的权重值依赖于文档频率df和文档中词项的频率tf
-# 我们要在倒排索引表中记录某一词在某一文档中出现的频率tf
-# 最初的思路是把倒排表中的每一项设置为一个二元的tuple
-# 然而在python中tuple是immutable的
-# 于是我打算把倒排表由list变成一个dictionary，key值为docID，属性值为该term在docID文档中出现的频率tf
 def create_index():
-    files = os.listdir(tools.reuterspath)
+    files = os.listdir(tools.datapath)
     inverted_index = {}
     for file in files:
-        lines = open(tools.reuterspath + file, "r").readlines()
+        lines = open(tools.datapath + file, "r").readlines()
         for line in lines:
-            wordList = line.split()
+            # wordList = line.split()
+            wordList = LanguageAnalysis.lemmatize_sentence(line, True)
             for word in wordList:
                 if word not in inverted_index:
                     inverted_index[word] = {file: 1}

@@ -14,7 +14,7 @@ def getScoreDocList(index, fileNum, words, docList):
         for (s, word) in mainWords:
             mainWordsString += word + " "
             cnt += 1
-            if cnt == 3:
+            if cnt == 10:
                 break
         url = "data/" + doc
         scoreDocList.append([score, doc, mainWordsString, url, tools.TimeStampToTime(os.path.getctime(url))])
@@ -60,7 +60,7 @@ def search(statement):
 
     # 数据集改变后需要删除index.txt重新生成
     index = Index.get_index()
-    files = os.listdir(tools.reuterspath)
+    files = os.listdir(tools.datapath)
     fileNum = len(files)
 
     docList = searchWords(index, wordSet)
