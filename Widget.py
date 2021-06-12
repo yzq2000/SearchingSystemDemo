@@ -48,6 +48,10 @@ class SearchingSystemWidget(QWidget):
             self.showTable(results)
 
     def showTable(self, results):
+        # 清空上次搜索结果
+        rows = self.table.rowCount()
+        for row in reversed(range(rows)):
+            self.table.removeRow(row)
         for row in range(len(results)):
             item = results[row]
             self.table.insertRow(row)

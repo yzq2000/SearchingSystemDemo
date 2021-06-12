@@ -1,19 +1,14 @@
 import sys
-import os
 import nltk
 import tools
 from PyQt5.QtWidgets import *
 from Widget import SearchingSystemWidget
 
 
-# WORDLIST = tools.getWordList()
-#
-# INDEX = tools.getIndex()
-#
-# DIRECTNAME = 'Reuters'
-# PATH = tools.projectpath + DIRECTNAME
-# FILES = os.listdir(tools.reuterspath)
-# FILENUM = len(FILES)
+WORDLIST = tools.getWordList()
+
+DIRECTNAME = 'Reuters'
+PATH = tools.projectpath + DIRECTNAME
 
 
 def init():
@@ -22,6 +17,7 @@ def init():
     nltk.download("averaged_perceptron_tagger")
     nltk.download("punkt")
     nltk.download("maxnet_treebank_pos_tagger")
+    print("prepared")
 
 
 if __name__ == '__main__':
