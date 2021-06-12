@@ -9,6 +9,7 @@ class SearchingSystemWidget(QWidget):
         self.btn = QPushButton('Search', self)
         self.lineEdit = QLineEdit(self)
         self.table = QTableWidget(self)
+        self.label = QLabel(self)
         self.initUI()
 
     def initUI(self):
@@ -22,11 +23,15 @@ class SearchingSystemWidget(QWidget):
         self.btn.resize(100, 30)
         self.btn.clicked.connect(self.searchBtnClicked)
 
-        self.table.move(50, 120)
-        self.table.resize(700, 430)
+        self.label.move(50, 100)
+        self.label.resize(700, 30)
+
+        self.table.move(50, 150)
+        self.table.resize(700, 400)
         self.table.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.table.setColumnCount(6)
         self.table.setHorizontalHeaderLabels(['相关度', '题目', '主要匹配内容', 'URL', '日期', '准确率'])
+        # self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.setColumnWidth(0, 50)
         self.table.setColumnWidth(1, 150)
         self.table.setColumnWidth(2, 150)
@@ -44,7 +49,8 @@ class SearchingSystemWidget(QWidget):
             msg.warning(self, "", "do not search null", QMessageBox.Yes)
         else:
             statement = self.lineEdit.text()
-            results = search(statement)
+            spellingCorrectStr, results = search(statement)
+            self.label.setText(spellingCorrectStr)
             self.showTable(results)
 
     def showTable(self, results):

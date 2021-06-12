@@ -16,7 +16,8 @@ def getScoreDocList(index, fileNum, words, docList):
             cnt += 1
             if cnt == 3:
                 break
-        scoreDocList.append([score, doc, mainWordsString])
+        url = "data/" + doc
+        scoreDocList.append([score, doc, mainWordsString, url, tools.TimeStampToTime(os.path.getctime(url))])
     return scoreDocList
 
 # 从大到小得到sortedDocList
@@ -60,6 +61,8 @@ def search(statement):
     inputWords = LanguageAnalysis.correctSentence(inputWords)
     print(inputWords)
 
+    spellingCorrectStr = "猜您想搜：" + " ".join(inputWords)
+
     wordSet = set(inputWords)
 
     index = Index.get_index()
@@ -70,4 +73,4 @@ def search(statement):
     sortedDocList = sortScoreDocList(index, fileNum, wordSet, docList)
     for doc in sortedDocList:
         print("doc ID: ", doc[1], " score: ", "%.4f" % doc[0])
-    return sortedDocList
+    return spellingCorrectStr, sortedDocList

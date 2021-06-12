@@ -1,6 +1,10 @@
 import json
 import os
 from collections import Counter
+import time
+import datetime
+
+import timestamp as timestamp
 
 projectpath = os.getcwd() + "/"
 reuterspath = projectpath + "data/"
@@ -68,6 +72,9 @@ def mergeTwoList(list1, list2):
         rlist.extend(list2[n2: len2])
     return rlist
 
+def TimeStampToTime(timestamp):
+    timeStruct = time.localtime(timestamp)
+    return time.strftime('%Y-%m-%d %H:%M:%S', timeStruct)
 
 print("getting file list...")
 wholeDocList = getWholeDocList()
