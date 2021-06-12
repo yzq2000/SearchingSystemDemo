@@ -1,40 +1,9 @@
-import json
 import os
 from collections import Counter
 import time
-import datetime
-
-import timestamp as timestamp
 
 projectpath = os.getcwd() + "/"
 reuterspath = projectpath + "data/"
-
-def writeToFile(item,filename):
-    # 将数据写入到文件中
-    file = open(filename,'w')
-    str = json.JSONEncoder().encode(item)
-    file.write(str)
-    file.close()
-
-# 获取文档名中的文档的id
-def getDocID(filename):
-    end = filename.find('.')
-    docId = filename[0:end]
-    return int(docId)
-
-def getWholeDocList():
-    files = os.listdir(reuterspath)
-    fileList = []
-    for file in files:
-        fileList.append(getDocID(file))
-    return sorted(fileList)
-
-def getWordList():
-    file = open(projectpath + 'wordList.json', 'r')
-    wordStr = file.read()
-    wordList = json.JSONDecoder().decode(wordStr)
-    # print(wordList)
-    return wordList
 
 def getWords():
     files = os.listdir(reuterspath)
@@ -75,6 +44,3 @@ def mergeTwoList(list1, list2):
 def TimeStampToTime(timestamp):
     timeStruct = time.localtime(timestamp)
     return time.strftime('%Y-%m-%d %H:%M:%S', timeStruct)
-
-print("getting file list...")
-wholeDocList = getWholeDocList()

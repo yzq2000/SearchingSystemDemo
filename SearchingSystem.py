@@ -52,19 +52,13 @@ def searchWords(index, words):
 
 
 def search(statement):
-    print(statement)
-
-    print("stemming...")
+    # stemming
     inputWords = LanguageAnalysis.lemmatize_sentence(statement, True)
-    print(inputWords)
-    print("spelling correcting...")
+    # correct spelling
     inputWords = LanguageAnalysis.correctSentence(inputWords)
-    print(inputWords)
-
-    spellingCorrectStr = "猜您想搜：" + " ".join(inputWords)
-
     wordSet = set(inputWords)
 
+    # 数据集改变后需要删除index.txt重新生成
     index = Index.get_index()
     files = os.listdir(tools.reuterspath)
     fileNum = len(files)
@@ -73,4 +67,6 @@ def search(statement):
     sortedDocList = sortScoreDocList(index, fileNum, wordSet, docList)
     for doc in sortedDocList:
         print("doc ID: ", doc[1], " score: ", "%.4f" % doc[0])
+
+    spellingCorrectStr = "猜您想搜：" + " ".join(inputWords)
     return spellingCorrectStr, sortedDocList
