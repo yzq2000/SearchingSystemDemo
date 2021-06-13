@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import *
-
+import os
+import tools
+from InfoExtractSystem import extract
 
 class InfoExtractWidget(QWidget):
     def __init__(self):
@@ -17,9 +19,11 @@ class InfoExtractWidget(QWidget):
 
         self.comboBox.move(50, 50)
         self.comboBox.resize(485, 30)
+        self.initComboBox()
 
         self.extractBtn.move(560, 50)
         self.extractBtn.resize(100, 30)
+        self.extractBtn.clicked.connect(self.extractBtnClicked)
 
         self.exitBtn.move(675, 50)
         self.exitBtn.resize(75, 30)
@@ -28,9 +32,12 @@ class InfoExtractWidget(QWidget):
         self.webView.move(50, 120)
         self.webView.resize(700, 430)
 
-        self.webView.setHtml('''hiii''')
+    def initComboBox(self):
+        files = os.listdir(tools.datapath)
+        for file in files:
+            self.comboBox.addItem(file)
 
-        self.comboBox.addItem("1")
-        self.comboBox.addItem("1")
-        self.comboBox.addItem("1")
-        self.comboBox.addItem("1")
+    def extractBtnClicked(self):
+        url = tools.datapath + self.comboBox.currentText()
+        html = extract(url)
+        self.webView.setHtml(html)
