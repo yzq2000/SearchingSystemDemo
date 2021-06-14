@@ -10,16 +10,21 @@ class InfoExtractWidget(QWidget):
         self.exitBtn = QPushButton('Exit', self)
         self.extractBtn = QPushButton('Extract', self)
         self.webView = QWebEngineView(self)
-        self.comboBox = QComboBox(self)
+        self.fileComboBox = QComboBox(self)
+        self.nlpComboBox = QComboBox(self)
         self.initUI()
 
     def initUI(self):
         self.resize(800, 600)
         self.setWindowTitle('Information Extraction System')
 
-        self.comboBox.move(50, 50)
-        self.comboBox.resize(485, 30)
-        self.initComboBox()
+        self.fileComboBox.move(50, 50)
+        self.fileComboBox.resize(300, 30)
+        self.initFileComboBox()
+
+        self.nlpComboBox.move(385, 50)
+        self.nlpComboBox.resize(150, 30)
+        self.initNlpComboBox()
 
         self.extractBtn.move(560, 50)
         self.extractBtn.resize(100, 30)
@@ -32,12 +37,18 @@ class InfoExtractWidget(QWidget):
         self.webView.move(50, 120)
         self.webView.resize(700, 430)
 
-    def initComboBox(self):
+    def initFileComboBox(self):
         files = os.listdir(tools.datapath)
         for file in files:
-            self.comboBox.addItem(file)
+            self.fileComboBox.addItem(file)
+
+    def initNlpComboBox(self):
+        self.nlpComboBox.addItem("small model")
+        self.nlpComboBox.addItem("middle model")
+        self.nlpComboBox.addItem("large model")
 
     def extractBtnClicked(self):
-        url = tools.datapath + self.comboBox.currentText()
-        html = extract(url)
+        url = tools.datapath + self.fileComboBox.currentText()
+        model = self.nlpComboBox.currentText()
+        html = extract(url, model)
         self.webView.setHtml(html)
